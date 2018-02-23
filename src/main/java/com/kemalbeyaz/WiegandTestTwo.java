@@ -11,7 +11,7 @@ import java.util.Timer;
 
 public class WiegandTestTwo {
 
-        public static char[] s = new char[100];
+        public static char[] s = new char[26];
         static int bits = 0;
 
         public static void main(String[] args) {
@@ -43,12 +43,12 @@ public class WiegandTestTwo {
                             System.out.println(1);
                         }
 
-                        if (bits == 50) {
+                        if (bits == 25) {
                             bits=0;
                             Print();
 
                             try {
-                                Thread.sleep(300);
+                                Thread.sleep(100);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -74,7 +74,7 @@ public class WiegandTestTwo {
         }
 
         protected static void Print() {
-            for (int i = 0; i < 55; i++) {
+            for (int i = 0; i < 26; i++) {
                 System.out.write(s[i]);
             }
             System.out.println();
