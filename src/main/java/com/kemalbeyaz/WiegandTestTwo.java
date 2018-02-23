@@ -11,7 +11,7 @@ import java.util.Timer;
 
 public class WiegandTestTwo {
 
-        public static char[] s = new char[24];
+        public static char[] s = new char[26];
         static int bits = 0;
 
         public static void main(String[] args) {
@@ -24,6 +24,7 @@ public class WiegandTestTwo {
             // resistor enabled
             final GpioPinDigitalInput pin0 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00, PinPullResistance.PULL_UP);
             final GpioPinDigitalInput pin1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, PinPullResistance.PULL_UP);
+            final GpioPinDigitalInput pin2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_UP);
 
             System.out.println("PINs ready");
             Thread th = new Thread(new Runnable() {
@@ -42,6 +43,11 @@ public class WiegandTestTwo {
                             while (pin1.isLow()) { }
                             System.out.println(bits + "  " + 1);
                         }
+
+                        if(pin2.getState().isHigh())
+                            System.out.println("TXD is 1");
+                        else
+                            System.out.println("TXD is 0");
 
                         if (bits == 24) {
                             bits=0;
