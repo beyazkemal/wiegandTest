@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>wiegandTest</groupId>
+    <artifactId>com.kemalbeyaz</artifactId>
+    <version>1.0</version>
+
+    <developers>
+        <developer>
+            <name>Kemal BEYAZ</name>
+            <email>kemal@kemalbeyaz.com</email>
+            <url>http://beyaz.me</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-core</artifactId>
+            <version>1.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+    <plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.0.2</version>
+        <configuration>
+            <archive>
+                <manifest>
+                    <addClasspath>true</addClasspath>
+                    <!--<classpathPrefix>${pi.pi4j.Directory}/</classpathPrefix>-->
+                    <mainClass>com.kemalbeyaz.WiegandTest</mainClass>
+                </manifest>
+                <manifestEntries>
+                    <!-- Add the pi4j in runtime. -->
+                    <Class-Path>/opt/pi4j/lib/pi4j-core.jar</Class-Path>
+                </manifestEntries>
+            </archive>
+        </configuration>
+    </plugin>
+    </plugins>
+    </build>
+</project>
