@@ -34,11 +34,13 @@ public class WiegandTestTwo {
                         if (pin0.isLow()) { // D0 on ground?
                             s[bits++] = '0';
                             while (pin0.isLow()) { }
+                            System.out.println(0);
                         }
 
                         if (pin1.isLow()) { // D1 on ground?
                             s[bits++] = '1';
                             while (pin1.isLow()) { }
+                            System.out.println(1);
                         }
 
                         if (bits == 50) {
