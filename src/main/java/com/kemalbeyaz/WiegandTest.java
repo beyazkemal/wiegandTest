@@ -57,7 +57,7 @@ public class WiegandTest {
             //       environment configuration.
             config.device(SerialPort.getDefaultPort())
                     .baud(Baud._9600)
-                    .dataBits(DataBits.getInstance(24))
+                    .dataBits(DataBits._8)
                     .parity(Parity.NONE)
                     .stopBits(StopBits._1)
                     .flowControl(FlowControl.NONE);
@@ -68,7 +68,7 @@ public class WiegandTest {
             }
 
             // display connection details
-            console.box(" Connecting to: " + //config.toString(),
+            console.box(" Connecting to: " + config.toString(),
                     " We are sending ASCII data on the serial port every 1 second.",
                     " Data received on serial port will be displayed below.");
 

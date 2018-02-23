@@ -38,7 +38,7 @@
                 <manifest>
                     <addClasspath>true</addClasspath>
                     <!--<classpathPrefix>${pi.pi4j.Directory}/</classpathPrefix>-->
-                    <mainClass>com.kemalbeyaz.WiegandTest</mainClass>
+                    <mainClass>com.kemalbeyaz.WiegandTestTwo</mainClass>
                 </manifest>
                 <manifestEntries>
                     <!-- Add the pi4j in runtime. -->
