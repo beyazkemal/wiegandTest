@@ -44,12 +44,10 @@ public class WiegandTestTwo {
                             System.out.println(bits + "  " + 1);
                         }
 
-                        if(pin2.getState().isHigh())
-                            System.out.println("TXD is 1");
-                        else
+                        if(pin2.getState().isLow())
                             System.out.println("TXD is 0");
 
-                        if (bits == 24) {
+                        if (bits == 26) {
                             bits=0;
                             Print();
 
@@ -82,7 +80,7 @@ public class WiegandTestTwo {
         protected static void Print() {
 
             String sonuc = "";
-            for (int i = 0; i < 24; i++) {
+            for (int i = 0; i < 26; i++) {
                 sonuc = sonuc+s[i];
                 // System.out.write(s[i]);
             }
