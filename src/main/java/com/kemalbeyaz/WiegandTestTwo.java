@@ -43,12 +43,6 @@ public class WiegandTestTwo {
                         if (bits == 26) {
                             bits=0;
                             Print();
-
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
                         }
 
                     }
@@ -82,6 +76,19 @@ public class WiegandTestTwo {
             System.out.println("Binary: " +sonuc);
             System.out.println("Hex: "+hexStr);
             System.out.println("Decimal: "+hex2decimal(hexStr));
+
+            String facilityString = sonuc.substring(1,8);
+            int facilityDecimal = Integer.parseInt(facilityString,2);
+            String hexStrFacility = Integer.toString(facilityDecimal,16);
+            System.out.println("Facility Code: " + hexStrFacility);
+            System.out.println("Facility Code Decimal: " +hex2decimal(hexStrFacility));
+
+            String cardNumber = sonuc.substring(9,25);
+            int cardNumberDecimal = Integer.parseInt(cardNumber,2);
+            String hexStringCardNumber = Integer.toString(cardNumberDecimal,16);
+            System.out.println("Card Number: " +hexStringCardNumber);
+            System.out.println("Card Number Decimal: " + hex2decimal(hexStringCardNumber));
+
 
             System.out.println();
             bits = 0;
