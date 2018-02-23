@@ -34,13 +34,13 @@ public class WiegandTestTwo {
                         if (pin0.isLow()) { // D0 on ground?
                             s[bits++] = '0';
                             while (pin0.isLow()) { }
-                            System.out.println(0);
+                            System.out.println(bits + "  " + 0);
                         }
 
                         if (pin1.isLow()) { // D1 on ground?
                             s[bits++] = '1';
                             while (pin1.isLow()) { }
-                            System.out.println(1);
+                            System.out.println(bits + "  " + 1);
                         }
 
                         if (bits == 26) {
@@ -80,10 +80,24 @@ public class WiegandTestTwo {
                 sonuc = sonuc+s[i];
                 // System.out.write(s[i]);
             }
+            int decimal = Integer.parseInt(sonuc,2);
+            String hexStr = Integer.toString(decimal,16);
             System.out.println("Binary: " +sonuc);
-            String decimal = Long.toHexString(Long.parseLong(sonuc,2));
-            System.out.println("Decimal: "+decimal);
+            System.out.println("Hex: "+hexStr);
+            System.out.println("Decimal: "+hex2decimal(hexStr));
             System.out.println();
             bits = 0;
         }
+
+    public static int hex2decimal(String s) {
+        String digits = "0123456789ABCDEF";
+        s = s.toUpperCase();
+        int val = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            int d = digits.indexOf(c);
+            val = 16*val + d;
+        }
+        return val;
+    }
 }
