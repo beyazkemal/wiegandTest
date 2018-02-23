@@ -12,6 +12,7 @@ public class WiegandTestTwo {
         static int bits = 0;
 
         public static void main(String[] args) {
+            System.setProperty("pi4j.linking", "dynamic");
             // create gpio controller
             final GpioController gpio = GpioFactory.getInstance();
 
