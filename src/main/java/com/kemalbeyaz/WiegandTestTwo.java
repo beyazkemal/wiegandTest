@@ -43,7 +43,7 @@ public class WiegandTestTwo {
                             System.out.println(1);
                         }
 
-                        if (bits == 25) {
+                        if (bits == 26) {
                             bits=0;
                             Print();
 
@@ -74,9 +74,15 @@ public class WiegandTestTwo {
         }
 
         protected static void Print() {
+
+            String sonuc = "";
             for (int i = 0; i < 26; i++) {
-                System.out.write(s[i]);
+                sonuc = sonuc+s[i];
+                // System.out.write(s[i]);
             }
+            System.out.println("Binary: " +sonuc);
+            String decimal = Long.toHexString(Long.parseLong(sonuc,2));
+            System.out.println("Decimal: "+decimal);
             System.out.println();
             bits = 0;
         }
