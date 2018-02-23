@@ -8,7 +8,7 @@ import com.pi4j.io.gpio.RaspiPin;
 
 public class WiegandTestTwo {
 
-        public static char[] s = new char[25];
+        public static char[] s = new char[26];
         static int bits = 0;
 
         public static void main(String[] args) {
@@ -41,6 +41,12 @@ public class WiegandTestTwo {
                         if (bits == 26) {
                             bits=0;
                             Print();
+
+                            try {
+                                Thread.sleep(300);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                     }
