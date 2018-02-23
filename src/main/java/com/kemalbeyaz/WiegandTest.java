@@ -36,6 +36,7 @@ public class WiegandTest {
                 try {
                     console.println("[HEX DATA]   " + event.getHexByteString());
                     console.println("[ASCII DATA] " + event.getAsciiString());
+                    console.println("Bytes: " + event.getBytes());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -56,7 +57,7 @@ public class WiegandTest {
             //       environment configuration.
             config.device(SerialPort.getDefaultPort())
                     .baud(Baud._9600)
-                    .dataBits(DataBits._8)
+                    .dataBits(DataBits.getInstance(24))
                     .parity(Parity.NONE)
                     .stopBits(StopBits._1)
                     .flowControl(FlowControl.NONE);
