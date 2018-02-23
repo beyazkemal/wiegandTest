@@ -6,12 +6,9 @@ import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.RaspiPin;
 
-import java.util.Date;
-import java.util.Timer;
-
 public class WiegandTestTwo {
 
-        public static char[] s = new char[34];
+        public static char[] s = new char[26];
         static int bits = 0;
 
         public static void main(String[] args) {
@@ -24,7 +21,6 @@ public class WiegandTestTwo {
             // resistor enabled
             final GpioPinDigitalInput pin0 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00, PinPullResistance.PULL_UP);
             final GpioPinDigitalInput pin1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, PinPullResistance.PULL_UP);
-            final GpioPinDigitalInput pin2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_UP);
 
             System.out.println("PINs ready");
             Thread th = new Thread(new Runnable() {
@@ -44,10 +40,7 @@ public class WiegandTestTwo {
                             System.out.println(bits + "  " + 1);
                         }
 
-                        if(pin2.getState().isLow())
-                            System.out.println("TXD is 0");
-
-                        if (bits == 34) {
+                        if (bits == 26) {
                             bits=0;
                             Print();
 
@@ -80,7 +73,7 @@ public class WiegandTestTwo {
         protected static void Print() {
 
             String sonuc = "";
-            for (int i = 0; i < 34; i++) {
+            for (int i = 0; i < 26; i++) {
                 sonuc = sonuc+s[i];
                 // System.out.write(s[i]);
             }
@@ -89,6 +82,7 @@ public class WiegandTestTwo {
             System.out.println("Binary: " +sonuc);
             System.out.println("Hex: "+hexStr);
             System.out.println("Decimal: "+hex2decimal(hexStr));
+
             System.out.println();
             bits = 0;
         }
