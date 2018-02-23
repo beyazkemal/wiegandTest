@@ -8,18 +8,18 @@ import com.pi4j.io.gpio.RaspiPin;
 
 public class WiegandTestTwo {
 
-        public static char[] s = new char[10000];
+        public static char[] s = new char[25];
         static int bits = 0;
 
         public static void main(String[] args) {
             System.setProperty("pi4j.linking", "dynamic");
+
             // create gpio controller
             final GpioController gpio = GpioFactory.getInstance();
 
             // provision gpio pin #02 as an input pin with its internal pull down
             // resistor enabled
             final GpioPinDigitalInput pin0 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00, PinPullResistance.PULL_UP);
-
             final GpioPinDigitalInput pin1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, PinPullResistance.PULL_UP);
 
             System.out.println("PINs ready");
@@ -28,26 +28,19 @@ public class WiegandTestTwo {
 
                     while (true) {
 
-                        if (pin0.isLow()) { // D1 on ground?
+                        if (pin0.isLow()) { // D0 on ground?
                             s[bits++] = '0';
-                            while (pin0.isLow()) {
-
-                            }
-
+                            while (pin0.isLow()) { }
                         }
 
                         if (pin1.isLow()) { // D1 on ground?
                             s[bits++] = '1';
-                            while (pin1.isLow()) {
-                            }
-
+                            while (pin1.isLow()) { }
                         }
 
                         if (bits == 26) {
                             bits=0;
-
                             Print();
-
                         }
 
                     }
@@ -70,13 +63,10 @@ public class WiegandTestTwo {
         }
 
         protected static void Print() {
-
             for (int i = 0; i < 26; i++) {
                 System.out.write(s[i]);
-
             }
             System.out.println();
             bits = 0;
-
         }
 }
