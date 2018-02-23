@@ -68,7 +68,7 @@ public class WiegandTest {
             }
 
             // display connection details
-            console.box(" Connecting to: " + config.toString(),
+            console.box(" Connecting to: " + //config.toString(),
                     " We are sending ASCII data on the serial port every 1 second.",
                     " Data received on serial port will be displayed below.");
 
