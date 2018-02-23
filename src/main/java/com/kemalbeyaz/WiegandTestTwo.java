@@ -11,7 +11,7 @@ import java.util.Timer;
 
 public class WiegandTestTwo {
 
-        public static char[] s = new char[26];
+        public static char[] s = new char[34];
         static int bits = 0;
 
         public static void main(String[] args) {
@@ -47,7 +47,7 @@ public class WiegandTestTwo {
                         if(pin2.getState().isLow())
                             System.out.println("TXD is 0");
 
-                        if (bits == 26) {
+                        if (bits == 34) {
                             bits=0;
                             Print();
 
@@ -80,7 +80,7 @@ public class WiegandTestTwo {
         protected static void Print() {
 
             String sonuc = "";
-            for (int i = 0; i < 26; i++) {
+            for (int i = 0; i < 34; i++) {
                 sonuc = sonuc+s[i];
                 // System.out.write(s[i]);
             }
