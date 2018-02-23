@@ -11,7 +11,7 @@ import java.util.Timer;
 
 public class WiegandTestTwo {
 
-        public static char[] s = new char[26];
+        public static char[] s = new char[24];
         static int bits = 0;
 
         public static void main(String[] args) {
@@ -43,7 +43,7 @@ public class WiegandTestTwo {
                             System.out.println(bits + "  " + 1);
                         }
 
-                        if (bits == 26) {
+                        if (bits == 24) {
                             bits=0;
                             Print();
 
@@ -76,7 +76,7 @@ public class WiegandTestTwo {
         protected static void Print() {
 
             String sonuc = "";
-            for (int i = 0; i < 26; i++) {
+            for (int i = 0; i < 24; i++) {
                 sonuc = sonuc+s[i];
                 // System.out.write(s[i]);
             }
