@@ -65,7 +65,5 @@ public class WiegandTestThree extends TimerTask{
     public void run() {
 
         System.out.println("Hey! Çalıştım " +new Date());
-
-        }
     }
 }
