@@ -49,7 +49,7 @@ public class WiegandTestThree{
                         Print();
                     }
 
-                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>1000){
+                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>800){
                         bits=0;
                         startTime = 0;
                         System.out.println("Hooop!");
@@ -99,6 +99,8 @@ public class WiegandTestThree{
         final boolean enabledCard = CardControl.isEnabledCard(hex2decimal(hexStringCardNumber));
         if(enabledCard)
             System.out.println("Bu kart yetkili...");
+        else
+            System.out.println("Bu kart yetkili değil...");
 
         System.out.println();
         bits = 0;
