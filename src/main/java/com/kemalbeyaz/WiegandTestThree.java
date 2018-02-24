@@ -8,19 +8,24 @@ public class WiegandTestThree{
     static int bits = 0;
     static long startTime = 0;
 
+    final static GpioController gpio = GpioFactory.getInstance();
+
+    final static GpioPinDigitalOutput pin2red = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyRedLED", PinState.LOW);
+    final static GpioPinDigitalOutput pin3green = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "MyGreenLED", PinState.LOW);
+
     public static void main(String[] args) throws InterruptedException {
         System.setProperty("pi4j.linking", "dynamic");
 
         // create gpio controller
-        final GpioController gpio = GpioFactory.getInstance();
+        //final GpioController gpio = GpioFactory.getInstance();
 
         // provision gpio pin 0 and 1 as an input pin with its internal pull down
         // resistor enabled
         final GpioPinDigitalInput pin0 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00, PinPullResistance.PULL_UP);
         final GpioPinDigitalInput pin1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, PinPullResistance.PULL_UP);
 
-        final GpioPinDigitalOutput pin2red = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyRedLED", PinState.LOW);
-        final GpioPinDigitalOutput pin3green = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "MyGreenLED", PinState.LOW);
+        //final GpioPinDigitalOutput pin2red = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyRedLED", PinState.LOW);
+        //final GpioPinDigitalOutput pin3green = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "MyGreenLED", PinState.LOW);
 
         System.out.println("PINs ready");
 
@@ -51,7 +56,7 @@ public class WiegandTestThree{
                     if (bits == 26) {
                         bits=0;
                         Print();
-                        pin3green.pulse(1000, true);
+                        //this.pin3green.pulse(1000, true);
                     }
 
                     if(startTime != 0 && (System.currentTimeMillis()-startTime)>800){
