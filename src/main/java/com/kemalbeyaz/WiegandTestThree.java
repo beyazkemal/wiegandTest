@@ -8,8 +8,6 @@ public class WiegandTestThree{
     static int bits = 0;
     static long startTime = 0;
 
-    public WiegandTestThree() { }
-
     public static void main(String[] args) throws InterruptedException {
         System.setProperty("pi4j.linking", "dynamic");
 
@@ -51,7 +49,7 @@ public class WiegandTestThree{
                         Print();
                     }
 
-                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>4000){
+                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>2000){
                         bits=0;
                         startTime = 0;
                         System.out.println("Hooop!");
@@ -98,9 +96,9 @@ public class WiegandTestThree{
         System.out.println("Card Number: " +hexStringCardNumber);
         System.out.println("Card Number Decimal: " + hex2decimal(hexStringCardNumber));
 
-
         System.out.println();
         bits = 0;
+        startTime = 0;
     }
 
     public static int hex2decimal(String s) {
