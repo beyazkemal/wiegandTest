@@ -18,6 +18,10 @@ public class WiegandTestThree{
         // resistor enabled
         final GpioPinDigitalInput pin0 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00, PinPullResistance.PULL_UP);
         final GpioPinDigitalInput pin1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, PinPullResistance.PULL_UP);
+
+        final GpioPinDigitalOutput pin2red = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyRedLED", PinState.LOW);
+        final GpioPinDigitalOutput pin3green = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "MyGreenLED", PinState.LOW);
+
         System.out.println("PINs ready");
 
 
@@ -47,6 +51,7 @@ public class WiegandTestThree{
                     if (bits == 26) {
                         bits=0;
                         Print();
+                        pin3green.pulse(1000, true);
                     }
 
                     if(startTime != 0 && (System.currentTimeMillis()-startTime)>800){
@@ -101,6 +106,8 @@ public class WiegandTestThree{
             System.out.println("Bu kart yetkili...");
         else
             System.out.println("Bu kart yetkili değil...");
+
+
 
         System.out.println();
         bits = 0;
