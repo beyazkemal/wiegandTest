@@ -15,6 +15,11 @@ public class WiegandTestThree extends TimerTask{
 
     public WiegandTestThree() { }
 
+    @Override
+    public void run() {
+        System.out.println("timer has started!");
+    }
+
     public static void main(String[] args) throws InterruptedException {
         System.setProperty("pi4j.linking", "dynamic");
 
@@ -26,32 +31,50 @@ public class WiegandTestThree extends TimerTask{
         final GpioPinDigitalInput pin0 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00, PinPullResistance.PULL_UP);
         final GpioPinDigitalInput pin1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, PinPullResistance.PULL_UP);
 
-        // Timer test...
-        TimerTask timerTask = new WiegandTestThree();
-        Timer timer = new Timer(true);
-
         System.out.println("PINs ready");
 
-        pin0.addListener(new GpioPinListenerDigital() {
-            @Override
-            public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                // display pin state on console
-                System.out.println("0 --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
-                timer.scheduleAtFixedRate(timerTask, 0, 5*1000);
-                System.out.println("Bitti " + new Date());
+        TimerTask timerTask = new WiegandTestThree();
+        //running timer task as daemon thread
+        Timer timer = new Timer(true);
+        System.out.println("TimerTask is ready");
+
+        Thread th = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+
+                    if (pin0.isLow()) { // D0 on ground?
+                        s[bits++] = '0';
+                        while (pin0.isLow()) { }
+                        System.out.println(bits + "  " + 0);
+
+                        if(bits == 1)
+                            timer.scheduleAtFixedRate(timerTask, 0, 2000);
+                    }
+
+                    if (pin1.isLow()) { // D1 on ground?
+                        s[bits++] = '1';
+                        while (pin1.isLow()) { }
+                        System.out.println(bits + "  " + 1);
+                    }
+
+                    if(bits == 1 || bits == 2){
+                        Date time = new Date();
+                    }
+
+
+
+                    if (bits == 26) {
+                        bits=0;
+                        Print();
+                    }
+
+                }
+
             }
-
         });
-
-        pin1.addListener(new GpioPinListenerDigital() {
-            @Override
-            public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                // display pin state on console
-                System.out.println("1 --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
-            }
-
-        });
-
+        th.setPriority(Thread.MAX_PRIORITY);
+        th.start();
+        System.out.println("Thread start");
 
 
         // keep program running until user aborts (CTRL-C)
@@ -61,9 +84,45 @@ public class WiegandTestThree extends TimerTask{
 
     }
 
-    @Override
-    public void run() {
+    protected static void Print() {
 
-        System.out.println("Hey! Çalıştım " +new Date());
+        String sonuc = "";
+        for (int i = 0; i < 26; i++) {
+            sonuc = sonuc+s[i];
+            // System.out.write(s[i]);
+        }
+        int decimal = Integer.parseInt(sonuc,2);
+        String hexStr = Integer.toString(decimal,16);
+        System.out.println("Binary: " +sonuc);
+        System.out.println("Hex: "+hexStr);
+        System.out.println("Decimal: "+hex2decimal(hexStr));
+
+        String facilityString = sonuc.substring(1,8);
+        int facilityDecimal = Integer.parseInt(facilityString,2);
+        String hexStrFacility = Integer.toString(facilityDecimal,16);
+        System.out.println("Facility Code: " + hexStrFacility);
+        System.out.println("Facility Code Decimal: " +hex2decimal(hexStrFacility));
+
+        String cardNumber = sonuc.substring(9,25);
+        int cardNumberDecimal = Integer.parseInt(cardNumber,2);
+        String hexStringCardNumber = Integer.toString(cardNumberDecimal,16);
+        System.out.println("Card Number: " +hexStringCardNumber);
+        System.out.println("Card Number Decimal: " + hex2decimal(hexStringCardNumber));
+
+
+        System.out.println();
+        bits = 0;
+    }
+
+    public static int hex2decimal(String s) {
+        String digits = "0123456789ABCDEF";
+        s = s.toUpperCase();
+        int val = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            int d = digits.indexOf(c);
+            val = 16*val + d;
+        }
+        return val;
     }
 }
