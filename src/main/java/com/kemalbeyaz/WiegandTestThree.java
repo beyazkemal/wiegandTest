@@ -1,24 +1,14 @@
 package com.kemalbeyaz;
 
 import com.pi4j.io.gpio.*;
-import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
-public class WiegandTestThree extends TimerTask{
+public class WiegandTestThree{
 
     public static char[] s = new char[26];
     static int bits = 0;
+    static long startTime = 0;
 
     public WiegandTestThree() { }
-
-    @Override
-    public void run() {
-        System.out.println("timer has started!");
-    }
 
     public static void main(String[] args) throws InterruptedException {
         System.setProperty("pi4j.linking", "dynamic");
@@ -30,13 +20,8 @@ public class WiegandTestThree extends TimerTask{
         // resistor enabled
         final GpioPinDigitalInput pin0 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00, PinPullResistance.PULL_UP);
         final GpioPinDigitalInput pin1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, PinPullResistance.PULL_UP);
-
         System.out.println("PINs ready");
 
-        TimerTask timerTask = new WiegandTestThree();
-        //running timer task as daemon thread
-        Timer timer = new Timer(true);
-        System.out.println("TimerTask is ready");
 
         Thread th = new Thread(new Runnable() {
             public void run() {
@@ -48,24 +33,28 @@ public class WiegandTestThree extends TimerTask{
                         System.out.println(bits + "  " + 0);
 
                         if(bits == 1)
-                            timer.scheduleAtFixedRate(timerTask, 0, 2000);
+                            startTime = System.currentTimeMillis();
                     }
 
                     if (pin1.isLow()) { // D1 on ground?
                         s[bits++] = '1';
                         while (pin1.isLow()) { }
                         System.out.println(bits + "  " + 1);
-                    }
 
-                    if(bits == 1 || bits == 2){
-                        Date time = new Date();
+                        if(bits == 1)
+                            startTime = System.currentTimeMillis();
                     }
-
 
 
                     if (bits == 26) {
                         bits=0;
                         Print();
+                    }
+
+                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>4000){
+                        bits=0;
+                        startTime = 0;
+                        System.out.println("Hooop!");
                     }
 
                 }
