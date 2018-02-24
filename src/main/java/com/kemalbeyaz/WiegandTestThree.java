@@ -49,7 +49,7 @@ public class WiegandTestThree{
                         Print();
                     }
 
-                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>2000){
+                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>1000){
                         bits=0;
                         startTime = 0;
                         System.out.println("Hooop!");
