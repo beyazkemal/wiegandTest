@@ -28,7 +28,7 @@ public class WiegandTestThree{
                     if (pin0.isLow()) { // D0 on ground?
                         s[bits++] = '0';
                         while (pin0.isLow()) { }
-                        System.out.println(bits + "  " + 0);
+                        //System.out.println(bits + "  " + 0);
 
                         if(bits == 1)
                             startTime = System.currentTimeMillis();
@@ -37,7 +37,7 @@ public class WiegandTestThree{
                     if (pin1.isLow()) { // D1 on ground?
                         s[bits++] = '1';
                         while (pin1.isLow()) { }
-                        System.out.println(bits + "  " + 1);
+                        //System.out.println(bits + "  " + 1);
 
                         if(bits == 1)
                             startTime = System.currentTimeMillis();
@@ -95,6 +95,10 @@ public class WiegandTestThree{
         String hexStringCardNumber = Integer.toString(cardNumberDecimal,16);
         System.out.println("Card Number: " +hexStringCardNumber);
         System.out.println("Card Number Decimal: " + hex2decimal(hexStringCardNumber));
+
+        final boolean enabledCard = CardControl.isEnabledCard(hex2decimal(hexStringCardNumber));
+        if(enabledCard)
+            System.out.println("Bu kart yetkili...");
 
         System.out.println();
         bits = 0;
