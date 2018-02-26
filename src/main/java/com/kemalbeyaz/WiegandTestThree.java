@@ -57,8 +57,8 @@ public class WiegandTestThree{
                         else
                             pin2red.pulse(650,true);
                         enabledCard = false;
-                        long time = System.currentTimeMillis()-startTime;
-                        System.out.println("Süre: " + new SimpleDateFormat("mm:ss:SSS").format(new Date(time)));
+                        long time = ((System.currentTimeMillis()-startTime) / 1000);
+                        System.out.println("Süre: " + time % 60);
 
                     }
 
