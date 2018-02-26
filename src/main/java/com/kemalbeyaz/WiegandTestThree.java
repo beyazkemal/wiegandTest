@@ -48,16 +48,16 @@ public class WiegandTestThree{
                         bits=0;
                         startTime = 0;
                         Print();
-                        //this.pin3green.pulse(1000, true);
 
                         if(enabledCard)
-                            pin3green.pulse(750,true);
+                            pin3green.pulse(500,true);
                         else
-                            pin2red.pulse(750,true);
+                            pin2red.pulse(650,true);
                         enabledCard = false;
+                        System.out.println("Süre: " + (System.currentTimeMillis()-startTime));
                     }
 
-                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>520){
+                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>500){
                         bits=0;
                         startTime = 0;
                         System.out.println("Hooop!");
