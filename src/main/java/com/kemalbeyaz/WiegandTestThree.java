@@ -25,6 +25,7 @@ public class WiegandTestThree{
 
         final GpioPinDigitalOutput pin2red = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyRedLED", PinState.LOW);
         final GpioPinDigitalOutput pin3green = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "MyGreenLED", PinState.LOW);
+        final GpioPinDigitalOutput pin4Blue = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "MyBlueLED", PinState.LOW);
         System.out.println("PINs ready");
 
         Thread th = new Thread(new Runnable() {
@@ -57,8 +58,6 @@ public class WiegandTestThree{
                         else
                             pin2red.pulse(650,true);
                         enabledCard = false;
-                        long time = ((System.currentTimeMillis()-startTime) / 1000);
-                        System.out.println("Süre: " + time);
 
                     }
 
@@ -66,6 +65,7 @@ public class WiegandTestThree{
                         bits=0;
                         startTime = 0;
                         System.out.println("Hooop!");
+                        pin4Blue.pulse(250,true);
                     }
                 }
             } // end of run
