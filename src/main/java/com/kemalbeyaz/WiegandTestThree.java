@@ -8,16 +8,11 @@ public class WiegandTestThree{
     static int bits = 0;
     static long startTime = 0;
 
-    final static GpioController gpio = GpioFactory.getInstance();
-
-    final static GpioPinDigitalOutput pin2red = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyRedLED", PinState.LOW);
-    final static GpioPinDigitalOutput pin3green = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "MyGreenLED", PinState.LOW);
-
     public static void main(String[] args) throws InterruptedException {
         System.setProperty("pi4j.linking", "dynamic");
 
         // create gpio controller
-        //final GpioController gpio = GpioFactory.getInstance();
+        final GpioController gpio = GpioFactory.getInstance();
 
         // provision gpio pin 0 and 1 as an input pin with its internal pull down
         // resistor enabled
@@ -26,9 +21,7 @@ public class WiegandTestThree{
 
         //final GpioPinDigitalOutput pin2red = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyRedLED", PinState.LOW);
         //final GpioPinDigitalOutput pin3green = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "MyGreenLED", PinState.LOW);
-
         System.out.println("PINs ready");
-
 
         Thread th = new Thread(new Runnable() {
             public void run() {
@@ -37,7 +30,6 @@ public class WiegandTestThree{
                     if (pin0.isLow()) { // D0 on ground?
                         s[bits++] = '0';
                         while (pin0.isLow()) { }
-                        //System.out.println(bits + "  " + 0);
 
                         if(bits == 1)
                             startTime = System.currentTimeMillis();
@@ -46,15 +38,14 @@ public class WiegandTestThree{
                     if (pin1.isLow()) { // D1 on ground?
                         s[bits++] = '1';
                         while (pin1.isLow()) { }
-                        //System.out.println(bits + "  " + 1);
 
                         if(bits == 1)
                             startTime = System.currentTimeMillis();
                     }
 
-
                     if (bits == 26) {
                         bits=0;
+                        startTime = 0;
                         Print();
                         //this.pin3green.pulse(1000, true);
                     }
@@ -64,21 +55,18 @@ public class WiegandTestThree{
                         startTime = 0;
                         System.out.println("Hooop!");
                     }
-
                 }
+            } // end of run
+        }); // end of thread
 
-            }
-        });
         th.setPriority(Thread.MAX_PRIORITY);
         th.start();
         System.out.println("Thread start");
-
 
         // keep program running until user aborts (CTRL-C)
         while(true) {
             Thread.sleep(500);
         }
-
     }
 
     protected static void Print() {
@@ -86,21 +74,21 @@ public class WiegandTestThree{
         String sonuc = "";
         for (int i = 0; i < 26; i++) {
             sonuc = sonuc+s[i];
-            // System.out.write(s[i]);
         }
+
         int decimal = Integer.parseInt(sonuc,2);
         String hexStr = Integer.toString(decimal,16);
         System.out.println("Binary: " +sonuc);
         System.out.println("Hex: "+hexStr);
         System.out.println("Decimal: "+hex2decimal(hexStr));
 
-        String facilityString = sonuc.substring(1,8);
+        String facilityString = sonuc.substring(1,9);
         int facilityDecimal = Integer.parseInt(facilityString,2);
         String hexStrFacility = Integer.toString(facilityDecimal,16);
         System.out.println("Facility Code: " + hexStrFacility);
         System.out.println("Facility Code Decimal: " +hex2decimal(hexStrFacility));
 
-        String cardNumber = sonuc.substring(9,25);
+        String cardNumber = sonuc.substring(9,26);
         int cardNumberDecimal = Integer.parseInt(cardNumber,2);
         String hexStringCardNumber = Integer.toString(cardNumberDecimal,16);
         System.out.println("Card Number: " +hexStringCardNumber);
