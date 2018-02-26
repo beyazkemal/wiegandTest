@@ -50,7 +50,7 @@ public class WiegandTestThree{
                         //this.pin3green.pulse(1000, true);
                     }
 
-                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>800){
+                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>550){
                         bits=0;
                         startTime = 0;
                         System.out.println("Hooop!");
@@ -88,7 +88,7 @@ public class WiegandTestThree{
         System.out.println("Facility Code: " + hexStrFacility);
         System.out.println("Facility Code Decimal: " +hex2decimal(hexStrFacility));
 
-        String cardNumber = sonuc.substring(9,26);
+        String cardNumber = sonuc.substring(9,25);
         int cardNumberDecimal = Integer.parseInt(cardNumber,2);
         String hexStringCardNumber = Integer.toString(cardNumberDecimal,16);
         System.out.println("Card Number: " +hexStringCardNumber);
