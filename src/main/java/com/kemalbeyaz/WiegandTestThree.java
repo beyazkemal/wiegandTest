@@ -2,6 +2,9 @@ package com.kemalbeyaz;
 
 import com.pi4j.io.gpio.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class WiegandTestThree{
 
     public static char[] s = new char[26];
@@ -54,7 +57,9 @@ public class WiegandTestThree{
                         else
                             pin2red.pulse(650,true);
                         enabledCard = false;
-                        System.out.println("Süre: " + (System.currentTimeMillis()-startTime));
+                        long time = System.currentTimeMillis()-startTime;
+                        System.out.println("Süre: " + new SimpleDateFormat("mm:ss:SSS").format(new Date(time)));
+
                     }
 
                     if(startTime != 0 && (System.currentTimeMillis()-startTime)>500){
