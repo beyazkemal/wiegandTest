@@ -4,6 +4,7 @@ import com.pi4j.io.gpio.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class WiegandTestThree{
 
@@ -38,6 +39,9 @@ public class WiegandTestThree{
 
                         if(bits == 1)
                             startTime = System.currentTimeMillis();
+
+                        if(bits == 2)
+                            System.out.println("Süre " + TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-startTime));
                     }
 
                     if (pin1.isLow()) { // D1 on ground?
@@ -46,6 +50,10 @@ public class WiegandTestThree{
 
                         if(bits == 1)
                             startTime = System.currentTimeMillis();
+
+                        if(bits == 2)
+                            System.out.println("Süre " + TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-startTime));
+
                     }
 
                     if (bits == 26) {
@@ -58,10 +66,11 @@ public class WiegandTestThree{
                         else
                             pin2red.pulse(650,true);
                         enabledCard = false;
+                        System.out.println("Süre Sonu " + TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-startTime));
 
                     }
 
-                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>30){
+                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>75){
                         bits=0;
                         startTime = 0;
                         System.out.println("Hooop!");
