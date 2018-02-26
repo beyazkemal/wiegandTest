@@ -7,6 +7,7 @@ public class WiegandTestThree{
     public static char[] s = new char[26];
     static int bits = 0;
     static long startTime = 0;
+    static boolean enabledCard = false;
 
     public static void main(String[] args) throws InterruptedException {
         System.setProperty("pi4j.linking", "dynamic");
@@ -19,8 +20,8 @@ public class WiegandTestThree{
         final GpioPinDigitalInput pin0 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00, PinPullResistance.PULL_UP);
         final GpioPinDigitalInput pin1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_01, PinPullResistance.PULL_UP);
 
-        //final GpioPinDigitalOutput pin2red = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyRedLED", PinState.LOW);
-        //final GpioPinDigitalOutput pin3green = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "MyGreenLED", PinState.LOW);
+        final GpioPinDigitalOutput pin2red = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "MyRedLED", PinState.LOW);
+        final GpioPinDigitalOutput pin3green = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "MyGreenLED", PinState.LOW);
         System.out.println("PINs ready");
 
         Thread th = new Thread(new Runnable() {
@@ -48,9 +49,15 @@ public class WiegandTestThree{
                         startTime = 0;
                         Print();
                         //this.pin3green.pulse(1000, true);
+
+                        if(enabledCard)
+                            pin3green.pulse(750,true);
+                        else
+                            pin2red.pulse(750,true);
+                        enabledCard = false;
                     }
 
-                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>550){
+                    if(startTime != 0 && (System.currentTimeMillis()-startTime)>520){
                         bits=0;
                         startTime = 0;
                         System.out.println("Hooop!");
@@ -94,17 +101,11 @@ public class WiegandTestThree{
         System.out.println("Card Number: " +hexStringCardNumber);
         System.out.println("Card Number Decimal: " + hex2decimal(hexStringCardNumber));
 
-        final boolean enabledCard = CardControl.isEnabledCard(hex2decimal(hexStringCardNumber));
+        enabledCard = CardControl.isEnabledCard(hex2decimal(hexStringCardNumber));
         if(enabledCard)
             System.out.println("Bu kart yetkili...");
         else
             System.out.println("Bu kart yetkili değil...");
-
-
-
-        System.out.println();
-        bits = 0;
-        startTime = 0;
     }
 
     public static int hex2decimal(String s) {
